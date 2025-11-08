@@ -1,2 +1,37 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Custom Text Classes --- */
+.text-primary {
+  @apply text-purple-700;
+}
+
+.text-secondary {
+  @apply text-white;
+}
+
+.text-muted {
+  @apply text-gray-500 text-sm;
+}
+
+/* --- Custom Buttons --- */
+@layer components {
+  .btn-primary {
+    @apply btn text-white font-semibold rounded-lg px-5 py-2 shadow-md transition duration-300
+      bg-gradient-to-r from-purple-500 via-purple-600 to-purple-800
+      hover:from-purple-600 hover:via-purple-700 hover:to-purple-800 border-none;
+  }
+
+  .btn-secondary {
+    @apply btn border border-purple-500 text-purple-600 font-medium rounded-lg px-5 py-2 transition duration-300
+      hover:bg-purple-50 hover:text-purple-700;
+  }
+
+  .btn-outline {
+    @apply btn border bg-purple-100 border-purple-400 text-gray-700 hover:bg-gray-100 font-semibold rounded-lg px-5 py-2 transition duration-200;
+  }
+}
