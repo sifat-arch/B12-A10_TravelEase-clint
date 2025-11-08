@@ -1,7 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
+  const { logOutUser, user } = useAuth();
+  const handleLogOut = () => {
+    logOutUser()
+      .then(() => alert("logout successfully"))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -28,11 +37,22 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <NavLink>Item 1</NavLink>
+              <NavLink to="/">Home</NavLink>
             </li>
-            <NavLink>Item 1</NavLink>
             <li>
-              <NavLink>Item 1</NavLink>
+              <NavLink to="/all-vehicles">All Vehicles</NavLink>
+            </li>
+            <li>
+              <NavLink to="/add-vehicles">Add Vehicle</NavLink>
+            </li>
+            <li>
+              <NavLink to="/my-booking">My Bookings</NavLink>
+            </li>
+            <li>
+              <NavLink to="/login">Login</NavLink>
+            </li>
+            <li>
+              <NavLink to="/register">Register</NavLink>
             </li>
           </ul>
         </div>
@@ -52,16 +72,28 @@ const Navbar = () => {
           <li>
             <NavLink to="/my-booking">My Bookings</NavLink>
           </li>
-          <li>
-            <NavLink to="/login">Login</NavLink>
-          </li>
-          <li>
-            <NavLink to="/register">Register</NavLink>
-          </li>
+          {user ? (
+            ""
+          ) : (
+            <div className="flex">
+              <li>
+                <NavLink to="/login">Login</NavLink>
+              </li>
+              <li>
+                <NavLink to="/register">Register</NavLink>
+              </li>
+            </div>
+          )}
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn-outline">Button</a>
+        {user ? (
+          <button className="btn-outline" onClick={handleLogOut}>
+            Logout
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

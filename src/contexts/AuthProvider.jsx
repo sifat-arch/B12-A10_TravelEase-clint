@@ -1,51 +1,71 @@
-// import React, { useEffect, useState } from "react";
-// import { AuthContext } from "./AuthContext";
+import React, { useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
 
-// import {
-//   GoogleAuthProvider,
-//   onAuthStateChanged,
-//   signInWithPopup,
-//   signOut,
-// } from "firebase/auth";
-// import { auth } from "../firebase/firebase.config";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
 
-// const AuthProvider = ({ children }) => {
-//   const [user, setUser] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const googleProvider = new GoogleAuthProvider();
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const googleProvider = new GoogleAuthProvider();
 
-//   // logout
+  // register
 
-//   const logOutUser = () => {
-//     setLoading(true);
-//     return signOut(auth);
-//   };
+  const registerUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
-//   const signInUserWithGoogle = () => {
-//     setLoading(true);
-//     return signInWithPopup(auth, googleProvider);
-//   };
+  // login
 
-//   // observer
+  const logInUser = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-//   useEffect(() => {
-//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-//       setUser(currentUser);
-//       setLoading(false);
-//     });
+  // logout
 
-//     return () => unsubscribe();
-//   }, []);
+  const logOutUser = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
-//   const userInfo = {
-//     signInUserWithGoogle,
-//     loading,
-//     setLoading,
-//     user,
-//     logOutUser,
-//   };
+  // google login
 
-//   return <AuthContext value={userInfo}>{children}</AuthContext>;
-// };
+  const signInUserWithGoogle = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
 
-// export default AuthProvider;
+  // observer
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const userInfo = {
+    registerUser,
+    logInUser,
+    signInUserWithGoogle,
+    loading,
+    setLoading,
+    user,
+    logOutUser,
+  };
+
+  return <AuthContext value={userInfo}>{children}</AuthContext>;
+};
+
+export default AuthProvider;

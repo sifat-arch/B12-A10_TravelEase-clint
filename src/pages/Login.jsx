@@ -1,13 +1,52 @@
 import React from "react";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { logInUser, signInUserWithGoogle } = useAuth();
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
-    // TODO: Add your login logic here
+    // login user
+    logInUser(email, password)
+      .then((res) => {
+        console.log("logged user", res.user);
+        if (res.user) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Logged in",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        e.target.reset();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    signInUserWithGoogle()
+      .then((res) => {
+        console.log("logged user", res.user);
+        if (res.user) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login with google done",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -82,7 +121,11 @@ const Login = () => {
           </button>
 
           {/* google button */}
-          <button className="btn w-full py-5.5 bg-white text-black border-[#e5e5e5]">
+          <button
+            className="btn w-full py-5.5 bg-white text-black border-[#e5e5e5]"
+            onClick={handleGoogleLogin}
+            type="button"
+          >
             <svg
               aria-label="Google logo"
               width="16"

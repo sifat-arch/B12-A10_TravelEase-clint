@@ -1,13 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const { registerUser, signInUserWithGoogle } = useAuth();
+  const [error, setError] = useState("");
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
-    // TODO: Add your login logic here
+
+    // check password
+    if (password.length < 6) {
+      return setError("Password Length must be at least 6 characters");
+    }
+    if (!/[A-Z]/.test(password)) {
+      return setError("Password must contain at least one uppercase letter");
+    }
+    if (!/[a-z]/.test(password)) {
+      return setError("Password must contain at least one Lowercase letter");
+    }
+
+    //  firebase register
+    registerUser(email, password)
+      .then((res) => {
+        console.log("register user", res.user);
+        if (res.user) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "You have been registered",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        e.target.reset();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    signInUserWithGoogle()
+      .then((res) => {
+        console.log("logged user", res.user);
+        if (res.user) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login with google done",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -66,12 +117,15 @@ const Register = () => {
               Password
             </label>
             <input
-              type="password"
+              type="text"
               name="password"
               required
               className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
               placeholder="Enter your password"
             />
+          </div>
+          <div>
+            <p className="text-orange-500 font-semibold">{error}</p>
           </div>
 
           {/* checkbox */}
@@ -99,7 +153,11 @@ const Register = () => {
           </button>
 
           {/* google button */}
-          <button className="btn w-full py-5.5 bg-white text-black border-[#e5e5e5]">
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="btn w-full py-5.5 bg-white text-black border-[#e5e5e5]"
+          >
             <svg
               aria-label="Google logo"
               width="16"
@@ -133,7 +191,7 @@ const Register = () => {
 
         {/* Register Redirect */}
         <p className="text-center text-sm text-gray-600 mt-5">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <Link to="/login" className="text-purple-600 hover:underline ">
             Login
           </Link>
