@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AddVehicles from "../pages/AddVehicles";
 import MyBooking from "../pages/MyBooking";
+import PrivetRoute from "../privetRoute/PrivetRoute";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
       },
       {
         path: "view-details",
-        element: <ViewDetails />,
+        element: (
+          <PrivetRoute>
+            <ViewDetails />,
+          </PrivetRoute>
+        ),
       },
       {
         path: "login",
@@ -35,11 +40,19 @@ const router = createBrowserRouter([
       },
       {
         path: "add-vehicles",
-        element: <AddVehicles />,
+        element: (
+          <PrivetRoute>
+            <AddVehicles />,
+          </PrivetRoute>
+        ),
       },
       {
-        path: "my-booking",
-        element: <MyBooking />,
+        path: "my-bookings",
+        element: (
+          <PrivetRoute>
+            <MyBooking />,
+          </PrivetRoute>
+        ),
       },
     ],
   },

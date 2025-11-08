@@ -70,7 +70,7 @@ const Navbar = () => {
             <NavLink to="/add-vehicles">Add Vehicle</NavLink>
           </li>
           <li>
-            <NavLink to="/my-booking">My Bookings</NavLink>
+            <NavLink to="/my-bookings">My Bookings</NavLink>
           </li>
           {user ? (
             ""

@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const { logInUser, signInUserWithGoogle } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -24,6 +26,7 @@ const Login = () => {
           });
         }
         e.target.reset();
+        navigate(location.state || "/");
       })
       .catch((err) => {
         console.log(err);
@@ -42,6 +45,7 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          navigate(location.state || "/");
         }
       })
       .catch((err) => {
