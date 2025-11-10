@@ -3,13 +3,18 @@ import { NavLink } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
-  const { logOutUser, user } = useAuth();
+  const { logOutUser, user, setTheme } = useAuth();
+
   const handleLogOut = () => {
     logOutUser()
       .then(() => alert("logout successfully"))
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark" : "light");
   };
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -59,6 +64,14 @@ const Navbar = () => {
         <a className="btn btn-ghost text-xl ">daisyUI</a>
       </div>
       <div className="navbar-center hidden lg:flex">
+        <div>
+          <input
+            onChange={(e) => handleTheme(e.target.checked)}
+            type="checkbox"
+            defaultChecked={localStorage.getItem("theme") === "dark"}
+            className="toggle"
+          />
+        </div>
         <ul className="menu menu-horizontal px-1">
           <li>
             <NavLink to="/">Home</NavLink>

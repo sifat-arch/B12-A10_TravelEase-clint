@@ -10,11 +10,14 @@ const AllVehicles = () => {
       setAllVehicles(data.data);
     });
   }, [asioxInstnce]);
+  const sortedVehicles = allVehicles.sort(
+    (a, b) => b.pricePerDay - a.pricePerDay
+  );
   return (
     <div>
       <h1>All Vehicles</h1>
       <div className="grid grid-cols-4 gap-6">
-        {allVehicles.map((vehicles) => (
+        {sortedVehicles.map((vehicles) => (
           <Card key={vehicles._id} vehicles={vehicles} />
         ))}
       </div>

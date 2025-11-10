@@ -13,6 +13,7 @@ import { auth } from "../firebase/firebase.config";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
 
@@ -55,6 +56,13 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // dark and light mood
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   const userInfo = {
     registerUser,
     logInUser,
@@ -63,6 +71,8 @@ const AuthProvider = ({ children }) => {
     setLoading,
     user,
     logOutUser,
+    setTheme,
+    theme,
   };
 
   return <AuthContext value={userInfo}>{children}</AuthContext>;

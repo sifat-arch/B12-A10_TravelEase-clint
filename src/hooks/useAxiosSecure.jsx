@@ -14,6 +14,7 @@ const useAxiosSecure = () => {
   useEffect(() => {
     //set token in the header for all the api call using axiosSecure kook
     //request interceptor
+
     const requestInterceptor = axiosInstance.interceptors.request.use(
       (config) => {
         config.headers.authorization = `Bearer ${user.accessToken}`;

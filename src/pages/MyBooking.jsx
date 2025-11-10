@@ -12,10 +12,10 @@ const MyBooking = () => {
       .then((data) => setBookings(data?.data));
   }, [secureAxiosInstance]);
 
-
+  const sortedBookings = bookings.sort((a, b) => b.pricePerDay - a.pricePerDay);
   return (
     <div className="space-y-5">
-      {bookings.map((booking) => (
+      {sortedBookings.map((booking) => (
         <BookingsCard key={booking._id} booking={booking} />
       ))}
     </div>
