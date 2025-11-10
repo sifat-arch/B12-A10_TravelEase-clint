@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth"; // ধরে নিচ্ছি তুমি useAuth বানিয়েছো
 import Swal from "sweetalert2"; // npm i sweetalert2
-import useAxios from "../hooks/useAxios";
+
 import { useNavigate } from "react-router";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyVehicles = () => {
   // const { user } = useAuth();
   const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
   const { user } = useAuth();
-  const axiosInstance = useAxios();
+  const secureAxiosInstance = useAxiosSecure();
 
   useEffect(() => {
-    axiosInstance
+    secureAxiosInstance
       .get(`/vehicles?email=${user.email}`)
       .then((data) => setVehicles(data.data));
-  }, [axiosInstance, user]);
+  }, [secureAxiosInstance, user]);
 
   //Delete function
   const handleDelete = (id) => {
@@ -29,7 +30,7 @@ const MyVehicles = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosInstance.delete(`/vehicles/${id}`).then((data) => {
+        secureAxiosInstance.delete(`/vehicles/${id}`).then((data) => {
           if (data.data.deletedCount > 0) {
             Swal.fire("Deleted!", "Your vehicle has been deleted.", "success");
             //setVehicles(vehicles.filter((v) => v._id !== id));

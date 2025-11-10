@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import useAxios from "../hooks/useAxios";
+
 import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const ViewDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
-  const axiosInstance = useAxios();
+  const secureAxiosInstance = useAxiosSecure();
   const [vehicle, setVehicle] = useState({});
 
   useEffect(() => {
-    axiosInstance.get(`/vehicles/${id}`).then((data) => setVehicle(data.data));
-  }, [axiosInstance, id]);
+    secureAxiosInstance
+      .get(`/vehicles/${id}`)
+      .then((data) => setVehicle(data.data));
+  }, [secureAxiosInstance, id]);
 
   const handleBook = () => {
     const newBookingData = {
@@ -29,13 +32,12 @@ const ViewDetails = () => {
       status: "Pending",
     };
 
-    axiosInstance.post("/bookings", newBookingData).then((data) => {
+    secureAxiosInstance.post("/bookings", newBookingData).then((data) => {
       console.log(data);
       if (data) {
         alert("booking successful");
       }
     });
-    console.log(user);
   };
 
   return (

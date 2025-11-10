@@ -1,8 +1,9 @@
 import React from "react";
-import useAxios from "../hooks/useAxios";
+
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddVehicles = () => {
-  const axiosInstance = useAxios();
+  const secureAxiosInstance = useAxiosSecure();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -30,7 +31,7 @@ const AddVehicles = () => {
       createdAt: new Date().toISOString(), // auto add date
     };
 
-    axiosInstance.post("/vehicles", newVehicleInfo).then((data) => {
+    secureAxiosInstance.post("/vehicles", newVehicleInfo).then((data) => {
       console.log(data.data);
     });
   };

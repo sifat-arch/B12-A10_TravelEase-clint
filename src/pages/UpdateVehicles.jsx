@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useAxios from "../hooks/useAxios";
+
 import { useParams } from "react-router";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const UpdateVehicles = () => {
-  const axiosInstance = useAxios();
+  const secureAxiosInstance = useAxiosSecure();
   const [vehicle, setVehicle] = useState();
   const { id } = useParams();
   const [formData, setFormData] = useState({
@@ -15,8 +16,10 @@ const UpdateVehicles = () => {
   });
 
   useEffect(() => {
-    axiosInstance.get(`/vehicles/${id}`).then((data) => setVehicle(data.data));
-  }, [axiosInstance, id]);
+    secureAxiosInstance
+      .get(`/vehicles/${id}`)
+      .then((data) => setVehicle(data.data));
+  }, [secureAxiosInstance, id]);
 
   useEffect(() => {
     if (vehicle) {
@@ -44,7 +47,7 @@ const UpdateVehicles = () => {
       coverImage: e.target.coverImage.value,
       userEmail: e.target.userEmail.value,
     };
-    axiosInstance
+    secureAxiosInstance
       .put(`/vehicles/${id}`, updateData)
       .then((data) => console.log(data));
   };

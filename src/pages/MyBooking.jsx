@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import useAxios from "../hooks/useAxios";
+
 import BookingsCard from "../components/BookingsCard";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyBooking = () => {
-  const axiosInstance = useAxios();
+  const secureAxiosInstance = useAxiosSecure();
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
-    axiosInstance.get("/bookings").then((data) => setBookings(data.data));
-  }, [axiosInstance]);
+    secureAxiosInstance
+      .get("/bookings")
+      .then((data) => setBookings(data?.data));
+  }, [secureAxiosInstance]);
 
-  console.log(bookings);
+
   return (
     <div className="space-y-5">
       {bookings.map((booking) => (

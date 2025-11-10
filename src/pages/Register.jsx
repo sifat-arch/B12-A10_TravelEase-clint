@@ -28,7 +28,6 @@ const Register = () => {
     //  firebase register
     registerUser(email, password)
       .then((res) => {
-        console.log("register user", res.user);
         if (res.user) {
           Swal.fire({
             position: "top-end",
