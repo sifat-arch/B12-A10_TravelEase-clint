@@ -9,6 +9,7 @@ import AddVehicles from "../pages/AddVehicles";
 import MyBooking from "../pages/MyBooking";
 import PrivetRoute from "../privetRoute/PrivetRoute";
 import MyVehicles from "../pages/MyVehicles";
+import UpdateVehicles from "../pages/UpdateVehicles";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <MyVehicles />,
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "update-vehicles/:id",
+        element: (
+          <PrivetRoute>
+            <UpdateVehicles />,
           </PrivetRoute>
         ),
       },
