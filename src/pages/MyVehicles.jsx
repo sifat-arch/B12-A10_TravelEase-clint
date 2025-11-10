@@ -17,35 +17,29 @@ const MyVehicles = () => {
       .then((data) => setVehicles(data.data));
   }, [axiosInstance, user]);
 
-  // Delete function
-  // const handleDelete = (id) => {
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won’t be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       fetch(`http://localhost:3000/vehicles/${id}`, {
-  //         method: "DELETE",
-  //       })
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           if (data.deletedCount > 0) {
-  //             Swal.fire(
-  //               "Deleted!",
-  //               "Your vehicle has been deleted.",
-  //               "success"
-  //             );
-  //             setVehicles(vehicles.filter((v) => v._id !== id));
-  //           }
-  //         });
-  //     }
-  //   });
-  // };
+  //Delete function
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won’t be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosInstance.delete(`/vehicles/${id}`).then((data) => {
+          if (data.data.deletedCount > 0) {
+            Swal.fire("Deleted!", "Your vehicle has been deleted.", "success");
+            //setVehicles(vehicles.filter((v) => v._id !== id));
+            const restData = vehicles.filter((vehicle) => vehicle._id !== id);
+            setVehicles(restData);
+          }
+        });
+      }
+    });
+  };
 
   //Update redirect
   const handleUpdate = (id) => {
@@ -56,8 +50,6 @@ const MyVehicles = () => {
   const handleViewDetails = (id) => {
     navigate(`/view-details/${id}`);
   };
-
-  console.log(vehicles);
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-4">
@@ -108,7 +100,7 @@ const MyVehicles = () => {
                       Update
                     </button>
                     <button
-                      // onClick={() => handleDelete(vehicle._id)}
+                      onClick={() => handleDelete(vehicle._id)}
                       className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                     >
                       Delete
