@@ -1,6 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const Card = ({ vehicles }) => {
+  const navigate = useNavigate();
+  const handleDetails = () => {
+    console.log("click");
+    navigate(`/view-details/${vehicles._id}`);
+  };
   return (
     <div className=" rounded-2xl overflow-hidden shadow-lg bg-white">
       <img
@@ -23,7 +29,10 @@ const Card = ({ vehicles }) => {
         </span>
       </div>
       <div className="px-6 py-4 flex justify-between">
-        <button className="w-full bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+        <button
+          className="w-full bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
+          onClick={handleDetails}
+        >
           Details
         </button>
       </div>

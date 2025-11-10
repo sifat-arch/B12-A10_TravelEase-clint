@@ -132,7 +132,7 @@ const AddVehicles = () => {
             Cover Image URL
           </label>
           <input
-            type="url"
+            type="text"
             name="coverImage"
             className="w-full border p-2 rounded-md"
           />

@@ -8,6 +8,7 @@ import Register from "../pages/Register";
 import AddVehicles from "../pages/AddVehicles";
 import MyBooking from "../pages/MyBooking";
 import PrivetRoute from "../privetRoute/PrivetRoute";
+import MyVehicles from "../pages/MyVehicles";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
         element: <AllVehicles />,
       },
       {
-        path: "view-details",
+        path: "view-details/:id",
         element: (
           <PrivetRoute>
             <ViewDetails />,
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <MyBooking />,
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "my-vehicles",
+        element: (
+          <PrivetRoute>
+            <MyVehicles />,
           </PrivetRoute>
         ),
       },
