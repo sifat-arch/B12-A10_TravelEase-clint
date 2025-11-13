@@ -1,124 +1,71 @@
-// import React from "react";
-
-// const BookingsCard = ({ booking }) => {
-//   return (
-//     <div className="flex gap-10 shadow-md rounded-xl max-w-[1280px] mx-auto mt-10">
-//       <div className="w-1/3">
-//         <img className="h-70" src={booking.coverImage} alt="" />
-//       </div>
-
-//       <div className=" w-2/3 p-3">
-//         <div>
-//           <div className="flex justify-between">
-//             <div>
-//               <h1 className="text-xl font-bold">{booking.vehicleName}</h1>
-//               <p className="text-muted text-lg font-semibold">
-//                 Category: <span>{booking.category}</span>
-//               </p>
-//             </div>
-
-//             <div>
-//               <p className="text-muted">
-//                 <span className="text-3xl text-orange-400 font-bold">
-//                   {booking.pricePerDay}
-//                 </span>{" "}
-//                 / Day
-//               </p>
-//               <p className="text-xl font-semibold">Starting Form</p>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="bg-[#f2f7f6] mt-5 p-5 flex">
-//           <div className="w-1/3 space-y-1">
-//             <p className="text-muted">AutoMatic</p>
-//             <p className="text-muted">2025</p>
-//             <p className="text-muted">18km</p>
-//           </div>
-//           <div className="space-y-1">
-//             <p className="text-muted">Left</p>
-//             <p className="text-muted">4 Persons</p>
-//             <p className="text-muted">{booking.category}</p>
-//           </div>
-//         </div>
-
-//         <div className="flex justify-between mt-5">
-//           <div className="flex gap-2 items-center">
-//             <img
-//               className="w-12 rounded-full"
-//               src={booking.profileImg}
-//               alt=""
-//             />
-//             <p className="text-muted">{booking.bookedBy}</p>
-//           </div>
-
-//           <p className="text-xl font-bold">{booking.location}</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default BookingsCard;
 import React from "react";
 import useAuth from "../hooks/useAuth";
+import { motion } from "framer-motion";
 
 const BookingsCard = ({ booking }) => {
-  const { theme } = useAuth(); // context থেকে theme নিলে dark/light toggle কাজ করবে
+  const { theme } = useAuth();
 
   return (
     <div
-      className={`flex gap-10 shadow-md rounded-xl max-w-[1280px] mx-auto mt-10 border transition-colors duration-300
+      className={`flex flex-col md:flex-row gap-6 md:gap-10 shadow-md rounded-xl max-w-[1280px] mx-auto mt-10 border transition-colors duration-300
       ${
         theme === "light"
           ? "bg-white border-gray-200 text-gray-900"
           : "bg-gray-800 border-gray-700 text-gray-100"
       }`}
     >
-      <div className="w-1/3">
-        <img
-          className="h-70 w-full object-cover rounded-l-xl"
+      {/* Image Section */}
+      <div className="w-full md:w-1/3">
+        <motion.img
+          className="h-56 sm:h-64 md:h-full w-full object-cover rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
           src={booking.coverImage}
-          alt=""
+          alt={booking.vehicleName}
+          whileHover={{ scale: 1.1 }}
+          transition={{ type: "spacing", stiffness: 200, damping: 20 }}
         />
       </div>
 
-      <div className="w-2/3 p-3">
-        <div className="flex justify-between">
+      {/* Content Section */}
+      <div className="w-full md:w-2/3 p-4 sm:p-6">
+        {/* Vehicle Info */}
+        <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
           <div>
-            <h1 className="text-xl font-bold">{booking.vehicleName}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold">
+              {booking.vehicleName}
+            </h1>
             <p
               className={`${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
-              } text-lg font-semibold`}
+              } text-base sm:text-lg font-semibold`}
             >
               Category: <span>{booking.category}</span>
             </p>
           </div>
 
-          <div>
+          <div className="text-right">
             <p
               className={`${
                 theme === "light" ? "text-gray-700" : "text-gray-200"
-              } text-3xl text-orange-400 font-bold`}
+              } text-2xl sm:text-3xl text-orange-400 font-bold`}
             >
               {booking.pricePerDay}
             </p>
-            <p className="text-xl font-semibold">Starting From</p>
+            <p className="text-sm sm:text-base font-semibold">Starting From</p>
           </div>
         </div>
 
+        {/* Details Box */}
         <div
-          className={`mt-5 p-5 flex rounded-lg transition-colors duration-300
+          className={`mt-4 sm:mt-5 p-4 sm:p-5 flex flex-col sm:flex-row justify-between rounded-lg transition-colors duration-300
           ${theme === "light" ? "bg-[#f2f7f6]" : "bg-gray-700"}`}
         >
-          <div className="w-1/3 space-y-1">
+          <div className="w-full sm:w-1/2 space-y-1 text-sm sm:text-base">
             <p
               className={`${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
               }`}
             >
-              AutoMatic
+              Automatic
             </p>
             <p
               className={`${
@@ -135,7 +82,7 @@ const BookingsCard = ({ booking }) => {
               18km
             </p>
           </div>
-          <div className="space-y-1">
+          <div className="w-full sm:w-1/2 space-y-1 text-sm sm:text-base mt-2 sm:mt-0">
             <p
               className={`${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
@@ -160,23 +107,24 @@ const BookingsCard = ({ booking }) => {
           </div>
         </div>
 
-        <div className="flex justify-between mt-5">
-          <div className="flex gap-2 items-center">
+        {/* Footer Info */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-5 gap-3 sm:gap-0">
+          <div className="flex items-center gap-2">
             <img
-              className="w-12 rounded-full"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
               src={booking.profileImg}
-              alt=""
+              alt={booking.bookedBy}
             />
             <p
               className={`${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
-              }`}
+              } text-sm sm:text-base`}
             >
               {booking.bookedBy}
             </p>
           </div>
 
-          <p className="text-xl font-bold">{booking.location}</p>
+          <p className="text-lg sm:text-xl font-bold">{booking.location}</p>
         </div>
       </div>
     </div>

@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth"; // context থেকে theme এবং user
-import Swal from "sweetalert2"; // npm i sweetalert2
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { motion } from "framer-motion";
 
 const MyVehicles = () => {
   const [vehicles, setVehicles] = useState([]);
   const navigate = useNavigate();
-  const { user, theme } = useAuth(); // theme নেওয়া হলো
+  const { user, theme } = useAuth();
   const secureAxiosInstance = useAxiosSecure();
 
   useEffect(() => {
-    secureAxiosInstance
-      .get(`/vehicles?email=${user.email}`)
-      .then((data) => setVehicles(data.data));
+    if (user?.email) {
+      secureAxiosInstance
+        .get(`/vehicles?email=${user.email}`)
+        .then((data) => setVehicles(data.data));
+    }
   }, [secureAxiosInstance, user]);
 
-  //Delete function
+  // Delete function
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -39,7 +42,7 @@ const MyVehicles = () => {
     });
   };
 
-  //Update redirect
+  // Update redirect
   const handleUpdate = (id) => {
     navigate(`/update-vehicles/${id}`);
   };
@@ -52,90 +55,156 @@ const MyVehicles = () => {
   const sortedVehicles = vehicles.sort((a, b) => b.pricePerDay - a.pricePerDay);
 
   return (
-    <div
-      className={`max-w-6xl mx-auto mt-10 p-4 transition-colors duration-300 ${
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className={`max-w-6xl mx-auto mt-10 p-4 transition-colors duration-300 rounded-lg
+      ${
         theme === "light"
           ? "bg-white text-gray-900"
           : "bg-gray-900 text-gray-100"
       }`}
     >
-      <h2 className="text-2xl font-bold mb-6 text-center">My Vehicles</h2>
+      <h2 className="text-4xl font-bold mb-6 text-center">
+        My <span className="text-yellow-500">Vehicles</span>
+      </h2>
 
       {vehicles.length === 0 ? (
         <p className="text-center text-gray-500 dark:text-gray-400">
           No vehicles added yet.
         </p>
       ) : (
-        <div className="overflow-x-auto">
-          <table
-            className={`table w-full border transition-colors duration-300 ${
-              theme === "light" ? "border-gray-200" : "border-gray-700"
-            }`}
-          >
-            <thead
-              className={`${
-                theme === "light"
-                  ? "bg-gray-100 text-gray-900"
-                  : "bg-gray-800 text-gray-100"
+        <>
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto">
+            <table
+              className={`table w-full border transition-colors duration-300 ${
+                theme === "light" ? "border-gray-200" : "border-gray-700"
               }`}
             >
-              <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Vehicle Name</th>
-                <th>Price/Day</th>
-                <th>Location</th>
-                <th>Email</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedVehicles.map((vehicle, index) => (
-                <tr
-                  key={vehicle._id}
-                  className={`border-b transition-colors duration-300 ${
-                    theme === "light" ? "border-gray-200" : "border-gray-700"
-                  }`}
-                >
-                  <td>{index + 1}</td>
-                  <td>
-                    <img
-                      src={vehicle.coverImage}
-                      alt={vehicle.vehicleName}
-                      className="w-20 h-14 object-cover rounded"
-                    />
-                  </td>
-                  <td>{vehicle.vehicleName}</td>
-                  <td>{vehicle.pricePerDay}৳</td>
-                  <td>{vehicle.location}</td>
-                  <td>{vehicle.userEmail}</td>
-                  <td className="space-x-2">
-                    <button
-                      onClick={() => handleViewDetails(vehicle._id)}
-                      className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors duration-300"
-                    >
-                      View
-                    </button>
-                    <button
-                      onClick={() => handleUpdate(vehicle._id)}
-                      className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition-colors duration-300"
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => handleDelete(vehicle._id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors duration-300"
-                    >
-                      Delete
-                    </button>
-                  </td>
+              <thead
+                className={`${
+                  theme === "light"
+                    ? "bg-gray-100 text-gray-900"
+                    : "bg-gray-800 text-gray-100"
+                }`}
+              >
+                <tr>
+                  <th>#</th>
+                  <th>Image</th>
+                  <th>Vehicle Name</th>
+                  <th>Price/Day</th>
+                  <th>Location</th>
+                  <th>Email</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {sortedVehicles.map((vehicle, index) => (
+                  <tr
+                    key={vehicle._id}
+                    className={`border-b transition-colors duration-300 ${
+                      theme === "light" ? "border-gray-200" : "border-gray-700"
+                    }`}
+                  >
+                    <td>{index + 1}</td>
+                    <td>
+                      <img
+                        src={vehicle.coverImage}
+                        alt={vehicle.vehicleName}
+                        className="w-20 h-14 object-cover rounded"
+                      />
+                    </td>
+                    <td>{vehicle.vehicleName}</td>
+                    <td>{vehicle.pricePerDay}৳</td>
+                    <td>{vehicle.location}</td>
+                    <td>{vehicle.userEmail}</td>
+                    <td className="space-x-2">
+                      <button
+                        onClick={() => handleViewDetails(vehicle._id)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors duration-300"
+                      >
+                        View
+                      </button>
+                      <button
+                        onClick={() => handleUpdate(vehicle._id)}
+                        className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition-colors duration-300"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => handleDelete(vehicle._id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors duration-300"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-6">
+            {sortedVehicles.map((vehicle) => (
+              <div
+                key={vehicle._id}
+                className={`p-4 rounded-lg shadow-md transition-colors duration-300 ${
+                  theme === "light"
+                    ? "bg-gray-50 border border-gray-200"
+                    : "bg-gray-800 border border-gray-700"
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={vehicle.coverImage}
+                    alt={vehicle.vehicleName}
+                    className="w-24 h-16 object-cover rounded"
+                  />
+                  <div>
+                    <h3 className="text-lg font-bold">{vehicle.vehicleName}</h3>
+                    <p className="text-sm text-gray-500">{vehicle.location}</p>
+                    <p className="font-semibold text-orange-400">
+                      {vehicle.pricePerDay}৳ /day
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-3 text-sm">
+                  <p>
+                    <span className="font-semibold">Email:</span>{" "}
+                    {vehicle.userEmail}
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-2 mt-4">
+                  <button
+                    onClick={() => handleViewDetails(vehicle._id)}
+                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors duration-300 text-sm"
+                  >
+                    View
+                  </button>
+                  <button
+                    onClick={() => handleUpdate(vehicle._id)}
+                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition-colors duration-300 text-sm"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => handleDelete(vehicle._id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors duration-300 text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
-    </div>
+    </motion.div>
   );
 };
 

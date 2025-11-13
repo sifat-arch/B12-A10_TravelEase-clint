@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const Register = () => {
-  const { registerUser, signInUserWithGoogle } = useAuth();
+  const { registerUser, signInUserWithGoogle, theme } = useAuth();
   const [error, setError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -65,67 +65,95 @@ const Register = () => {
         console.log(err);
       });
   };
-
+  console.log(theme);
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-lg  bg-white shadow-lg rounded-2xl p-8">
-        <h2 className="text-2xl font-semibold text-center text-purple-700 mb-6">
-          Login to Your Account
+    <div
+      className={`min-h-screen flex items-center justify-center ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
+      <div
+        className={`w-full max-w-lg  shadow-lg rounded-2xl p-8 ${
+          theme === "light" ? "bg-white" : "bg-gray-700"
+        }`}
+      >
+        <h2
+          className={`text-3xl font-bold text-center mb-8 ${
+            theme === "light" ? "text-black" : "text-white"
+          } `}
+        >
+          Register to Your <span className="text-yellow-500"> Account</span>
         </h2>
 
         <form onSubmit={handleLogin} className="space-y-5">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label
+              className={`block text-sm font-medium text-gray-600 mb-1 ${
+                theme === "light" ? "text-gray-500" : "text-white"
+              }`}
+            >
               Name
             </label>
             <input
               type="text"
               name="name"
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               placeholder="your Name"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label
+              className={`block text-sm font-medium text-gray-600 mb-1 ${
+                theme === "dark" && "text-white"
+              }`}
+            >
               Email
             </label>
             <input
               type="email"
               name="email"
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               placeholder="Enter your email"
             />
           </div>
 
           {/* Photo URL */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label
+              className={`block text-sm font-medium text-gray-600 mb-1 ${
+                theme === "dark" && "text-white"
+              }`}
+            >
               Photo URL
             </label>
             <input
               type="text"
               name="photo"
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               placeholder="Enter your PhotoURL"
             />
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label
+              className={`block text-sm font-medium text-gray-600 mb-1 ${
+                theme === "dark" && "text-white"
+              }`}
+            >
               Password
             </label>
             <input
               type="text"
               name="password"
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               placeholder="Enter your password"
             />
           </div>
@@ -139,11 +167,16 @@ const Register = () => {
               type="checkbox"
               id="terms"
               required
-              className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+              className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"
             />
-            <label htmlFor="terms" className="text-sm text-gray-600">
+            <label
+              htmlFor="terms"
+              className={`text-sm text-gray-600 ${
+                theme === "dark" && "text-white"
+              }`}
+            >
               I agree to the{" "}
-              <a href="/#" className="text-purple-600 hover:underline">
+              <a href="/#" className="text-yellow-500 hover:underline">
                 Terms & Conditions
               </a>
             </label>
@@ -152,7 +185,7 @@ const Register = () => {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full btn-primary py-7 hover:bg-purple-700 transition"
+            className="w-full btn-primary py-7 bg-yellow-500 hover:bg-yellow-700 transition"
           >
             Register
           </button>
@@ -195,9 +228,13 @@ const Register = () => {
         </form>
 
         {/* Register Redirect */}
-        <p className="text-center text-sm text-gray-600 mt-5">
+        <p
+          className={`text-center text-sm text-gray-600 mt-5 ${
+            theme === "dark" && "text-white"
+          }`}
+        >
           Don't have an account?{" "}
-          <Link to="/login" className="text-purple-600 hover:underline ">
+          <Link to="/login" className="text-yellow-500 hover:underline ">
             Login
           </Link>
         </p>

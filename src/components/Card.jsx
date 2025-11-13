@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-
+import { motion } from "framer-motion";
 import useAuth from "../hooks/useAuth";
 
 const Card = ({ vehicles }) => {
@@ -20,10 +20,12 @@ const Card = ({ vehicles }) => {
                   } 
                   border transition-colors duration-300`}
     >
-      <img
+      <motion.img
         className="w-full h-48 object-cover"
         src={vehicles.coverImage}
         alt={vehicles.vehicleName}
+        whileHover={{ scale: 1.1 }}
+        transition={{ type: "spacing", stiffness: 200, damping: 20 }}
       />
 
       <div className="px-6 py-4">
@@ -58,14 +60,11 @@ const Card = ({ vehicles }) => {
         </span>
       </div>
 
-      <div className="px-6 py-4">
+      <div className="px-6 py-4 ">
         <button
           onClick={handleDetails}
-          className={`w-full px-4 py-2 rounded-lg text-white ${
-            theme === "light"
-              ? "bg-gray-500 hover:bg-gray-600"
-              : "bg-gray-700 hover:bg-gray-600"
-          } transition-colors duration-300`}
+          className={`w-full px-4 font-semibold py-2 rounded-lg text-white
+          bg-yellow-500 hover:bg-yellow-600 transition-colors duration-300`}
         >
           Details
         </button>

@@ -22,13 +22,13 @@
 @layer components {
   .btn-primary {
     @apply btn text-white font-semibold rounded-lg px-5 py-2 shadow-md transition duration-300
-      bg-gradient-to-r from-purple-500 via-purple-600 to-purple-800
-      hover:from-purple-600 hover:via-purple-700 hover:to-purple-800 border-none;
+   from-yellow-500 
+      hover:from-yellow-600 border-none;
   }
 
   .btn-secondary {
-    @apply btn border border-purple-500 text-purple-600 font-medium rounded-lg px-5 py-2 transition duration-300
-      hover:bg-purple-50 hover:text-purple-700;
+    @apply btn border border-yellow-500 text-yellow-600 font-medium rounded-lg px-5 py-2 transition duration-300
+      hover:bg-yellow-50 hover:text-yellow-700;
   }
 
   .btn-outline {

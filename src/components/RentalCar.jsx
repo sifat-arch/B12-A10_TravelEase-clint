@@ -22,11 +22,11 @@ const cars = [
 
 const RentalCar = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col justify-center md:flex-row gap-5">
       {cars.map((car, idx) => (
         <div
           key={idx}
-          className="relative w-xl h-[650px] bg-cover bg-center group rounded-2xl"
+          className="relative w-full sm:w-[90%] md:w-[45%] lg:w-[30%] h-[400px] md:h-[500px] lg:h-[600px] bg-cover bg-center group rounded-2xl"
           style={{ backgroundImage: `url(${car.img})` }}
         >
           {" "}

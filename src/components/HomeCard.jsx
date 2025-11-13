@@ -1,11 +1,12 @@
 import React from "react";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 const HomeCard = ({ vehicles }) => {
   const { theme } = useAuth();
   return (
-    <div className="">
+    <div>
       <div>
         <div
           className={`max-w-xl rounded-xl shadow-lg overflow-hidden m-4 transition-colors duration-500 ${
@@ -14,10 +15,12 @@ const HomeCard = ({ vehicles }) => {
               : "bg-white text-gray-900"
           }`}
         >
-          <img
-            className="w-full object-cover"
+          <motion.img
+            className="w-full h-48 object-cover"
             src={vehicles.coverImage}
             alt="Car"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spacing", stiffness: 200, damping: 20 }}
           />
 
           <div className="p-5 ">
@@ -42,7 +45,7 @@ const HomeCard = ({ vehicles }) => {
                 className="flex-1 bg-yellow-500 text-center text-white py-2 rounded hover:bg-yellow-600 transition w-full"
                 to={`view-details/${vehicles._id}`}
               >
-                Details
+                <button>Details</button>
               </Link>
             </div>
           </div>

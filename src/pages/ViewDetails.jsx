@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { FcBusinessman } from "react-icons/fc";
+import { FaCar, FaRegCalendarCheck } from "react-icons/fa";
+import { FaSackDollar } from "react-icons/fa6";
+import { IoLocationOutline } from "react-icons/io5";
+import { MdEmail } from "react-icons/md";
+import { motion } from "framer-motion";
 
 const ViewDetails = () => {
   const { id } = useParams();
-  const { user, theme } = useAuth(); // theme নেওয়া হলো
+  const { user, theme } = useAuth();
   const secureAxiosInstance = useAxiosSecure();
   const [vehicle, setVehicle] = useState({});
 
@@ -39,94 +45,143 @@ const ViewDetails = () => {
   };
 
   return (
-    <div
-      className={`max-w-md mx-auto rounded-2xl shadow-lg overflow-hidden mt-10 border transition-colors duration-300
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className={`max-w-[1400px] mx-auto rounded-2xl shadow-lg overflow-hidden mt-10 border transition-colors duration-300 
+      flex flex-col md:flex-row
       ${
         theme === "light"
           ? "bg-white text-gray-900 border-gray-200"
           : "bg-gray-800 text-gray-100 border-gray-700"
       }`}
     >
-      <img
-        src={vehicle.coverImage}
-        alt={vehicle.vehicleName}
-        className="w-full h-56 object-cover"
-      />
+      {/* Image Section */}
+      <div className="w-full md:w-1/2 lg:w-[60%]">
+        <motion.img
+          whileHover={{ scale: 1.1 }}
+          transition={{ type: "spacing", stiffness: 200, damping: 20 }}
+          src={vehicle.coverImage}
+          alt={vehicle.vehicleName}
+          className="w-full h-[250px] md:h-full object-contain md:object-cover"
+        />
+      </div>
 
-      <div className="p-5">
-        <h2 className="text-2xl font-bold mb-2">{vehicle.vehicleName}</h2>
+      {/* Details Section */}
+      <div className="p-6 md:p-10 flex-1">
+        <h2 className="text-3xl md:text-5xl font-bold mb-2">
+          {vehicle.vehicleName}
+        </h2>
         <p
           className={`${
             theme === "light" ? "text-gray-600" : "text-gray-300"
-          } mb-4`}
+          } mb-6 text-sm md:text-base`}
         >
           {vehicle.description}
         </p>
 
+        {/* Info Grid */}
+
         <div
-          className={`space-y-2 ${
+          className={`grid grid-cols-1 sm:grid-cols-2 gap-6 ${
             theme === "light" ? "text-gray-700" : "text-gray-200"
           }`}
         >
-          <p>
-            <span className="font-semibold">Owner:</span> {vehicle.owner}
-          </p>
-          <p>
-            <span className="font-semibold">Category:</span> {vehicle.category}
-          </p>
-          <p>
-            <span className="font-semibold">Price/Day:</span> ৳
-            {vehicle.pricePerDay}
-          </p>
-          <p>
-            <span className="font-semibold">Location:</span> {vehicle.location}
-          </p>
-          <p>
-            <span className="font-semibold">Availability:</span>{" "}
+          {/* Owner */}
+          <div className="flex items-center gap-3">
+            <FcBusinessman size={40} />
+            <div>
+              <p className="text-xl font-bold text-orange-500">
+                {vehicle.owner}
+              </p>
+              <p className="text-sm font-medium">Owner</p>
+            </div>
+          </div>
+
+          {/* Category */}
+          <div className="flex items-center gap-3 justify-end sm:justify-end">
+            <FaCar size={38} />
+            <div className="text-right">
+              <p className="text-xl font-bold text-orange-500">
+                {vehicle.category}
+              </p>
+              <p className="text-sm font-medium">Category</p>
+            </div>
+          </div>
+
+          {/* Price */}
+          <div className="flex items-center gap-3">
+            <FaSackDollar size={40} />
+            <div>
+              <p className="text-xl font-bold text-orange-500">
+                ${vehicle.pricePerDay}
+              </p>
+              <p className="text-sm font-medium">Price/Day</p>
+            </div>
+          </div>
+
+          {/* Location */}
+          <div className="flex items-center gap-3 justify-end sm:justify-end">
+            <IoLocationOutline size={40} />
+            <div className="text-right">
+              <p className="text-xl font-bold text-orange-500">
+                {vehicle.location}
+              </p>
+              <p className="text-sm font-medium">Location</p>
+            </div>
+          </div>
+
+          {/* Date */}
+          <div className="flex items-center gap-3">
+            <FaRegCalendarCheck size={40} />
+            <div>
+              <p className="text-xl font-bold text-orange-500">
+                {vehicle.createdAt
+                  ? new Date(vehicle.createdAt).toLocaleDateString()
+                  : ""}
+              </p>
+              <p className="text-sm font-medium">Listed on</p>
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div className="flex items-center gap-3 justify-end sm:justify-end">
+            <MdEmail size={40} />
+            <div className="text-right">
+              <p className="text-xl font-bold text-orange-500">
+                {vehicle.userEmail}
+              </p>
+              <p className="text-sm font-medium">Contact</p>
+            </div>
+          </div>
+
+          {/* Availability */}
+          <div className="col-span-1 sm:col-span-2 flex items-center justify-center gap-3 mt-2">
             <span
-              className={`${
+              className={`text-2xl font-semibold ${
                 vehicle.availability === "Available"
-                  ? "text-green-600 font-semibold"
-                  : "text-red-600 font-semibold"
+                  ? "text-green-600"
+                  : "text-red-600"
               }`}
             >
               {vehicle.availability}
             </span>
-          </p>
-          <p>
-            <span className="font-semibold">Contact:</span> {vehicle.userEmail}
-          </p>
-          <p>
-            <span className="font-semibold">Listed on:</span>{" "}
-            {vehicle.createdAt
-              ? new Date(vehicle.createdAt).toLocaleDateString()
-              : ""}
-          </p>
+            <p className="font-semibold text-xl">Availability</p>
+          </div>
         </div>
 
-        <button
-          className={`mt-5 w-full py-2 rounded-lg transition
-          ${
-            theme === "light"
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-blue-700 text-white hover:bg-blue-600"
-          }`}
-          onClick={handleBook}
-        >
-          Book Now
-        </button>
-        <button
-          className={`mt-3 w-full py-2 rounded-lg transition
-          ${
-            theme === "light"
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-blue-700 text-white hover:bg-blue-600"
-          }`}
-        >
-          Request Now
-        </button>
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center sm:justify-start mt-6 ml-8">
+          <button
+            className="px-8 py-4 w-full rounded-lg transition bg-yellow-500 text-white hover:bg-yellow-600 text-lg md:text-xl font-bold"
+            onClick={handleBook}
+          >
+            Book Now
+          </button>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -10,6 +10,7 @@ import MyBooking from "../pages/MyBooking";
 import PrivetRoute from "../privetRoute/PrivetRoute";
 import MyVehicles from "../pages/MyVehicles";
 import UpdateVehicles from "../pages/UpdateVehicles";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 
