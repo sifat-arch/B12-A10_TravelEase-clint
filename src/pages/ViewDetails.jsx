@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { FcBusinessman } from "react-icons/fc";
@@ -8,12 +8,14 @@ import { FaSackDollar } from "react-icons/fa6";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { motion } from "framer-motion";
+import Swal from "sweetalert2";
 
 const ViewDetails = () => {
   const { id } = useParams();
   const { user, theme } = useAuth();
   const secureAxiosInstance = useAxiosSecure();
   const [vehicle, setVehicle] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     secureAxiosInstance
@@ -37,11 +39,28 @@ const ViewDetails = () => {
       status: "Pending",
     };
 
-    secureAxiosInstance.post("/bookings", newBookingData).then((data) => {
-      if (data) {
-        alert("Booking successful");
-      }
-    });
+    secureAxiosInstance
+      .post("/bookings", newBookingData)
+      .then((res) => {
+        if (res.data) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Booking successful!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/my-bookings");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Booking Failed!",
+          text: err.message || "Something went wrong while booking.",
+        });
+      });
   };
 
   return (

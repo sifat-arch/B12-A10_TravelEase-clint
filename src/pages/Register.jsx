@@ -42,7 +42,11 @@ const Register = () => {
         navigate(location.state || "/");
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed!",
+          text: err.message || "Something went wrong during register.",
+        });
       });
   };
 
@@ -62,7 +66,11 @@ const Register = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed!",
+          text: err.message || "Something went wrong during Google login.",
+        });
       });
   };
   console.log(theme);

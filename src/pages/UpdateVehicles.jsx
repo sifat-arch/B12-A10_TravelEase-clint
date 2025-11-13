@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const UpdateVehicles = () => {
   const secureAxiosInstance = useAxiosSecure();
+  const navigate = useNavigate();
   const { theme } = useAuth();
   const [vehicle, setVehicle] = useState();
   const { id } = useParams();
@@ -51,7 +53,26 @@ const UpdateVehicles = () => {
     };
     secureAxiosInstance
       .put(`/vehicles/${id}`, updateData)
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.data.modifiedCount > 0 || data.data.success) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Vehicle updated successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/my-vehicles");
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Update Failed!",
+          text:
+            err.message || "Something went wrong while updating the vehicle.",
+        });
+      });
   };
 
   if (!vehicle) {

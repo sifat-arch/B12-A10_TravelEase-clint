@@ -29,7 +29,11 @@ const Login = () => {
         navigate(location.state || "/");
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed!",
+          text: err.message || "Something went wrong during login.",
+        });
       });
   };
 
@@ -45,11 +49,16 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+
           navigate(location.state || "/");
         }
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed!",
+          text: err.message || "Something went wrong during Google login.",
+        });
       });
   };
 
@@ -144,7 +153,7 @@ const Login = () => {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full btn-primary py-7 hover:bg-yellow-700 transition"
+            className="w-full bg-yellow-500 py-3 text-white rounded-md hover:bg-yellow-600 transition"
           >
             Login
           </button>

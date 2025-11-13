@@ -4,6 +4,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
+import Swal from "sweetalert2";
 
 const AddVehicles = () => {
   const secureAxiosInstance = useAxiosSecure();
@@ -36,9 +37,30 @@ const AddVehicles = () => {
       createdAt: format(new Date(), "yyyy-mm-dd HH:MM:SS"),
     };
 
-    secureAxiosInstance.post("/vehicles", newVehicleInfo).then((data) => {
-      console.log(data.data);
-    });
+    // secureAxiosInstance.post("/vehicles", newVehicleInfo).then((data) => {
+    //   console.log(data.data);
+    // });
+
+    secureAxiosInstance
+      .post("/vehicles", newVehicleInfo)
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Vehicle added successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Failed to add vehicle!",
+          text: err.message || "Something went wrong while adding the vehicle.",
+        });
+      });
   };
 
   return (

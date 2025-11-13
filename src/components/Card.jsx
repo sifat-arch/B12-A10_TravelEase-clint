@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import useAuth from "../hooks/useAuth";
+import { FaRegUser } from "react-icons/fa";
+import { FaSackDollar } from "react-icons/fa6";
 
 const Card = ({ vehicles }) => {
   const navigate = useNavigate();
@@ -33,20 +35,22 @@ const Card = ({ vehicles }) => {
         <p
           className={`${
             theme === "light" ? "text-gray-700" : "text-gray-300"
-          } text-base mb-1`}
+          } text-base mb-1 flex items-center gap-2`}
         >
+          <FaRegUser />
           Owner: {vehicles.owner}
         </p>
         <p
           className={`${
             theme === "light" ? "text-gray-700" : "text-gray-300"
-          } text-base mb-1`}
+          } text-base mb-1 flex items-center gap-2`}
         >
+          <FaSackDollar />
           Price per day: ${vehicles.pricePerDay}
         </p>
 
         <span
-          className={`inline-block px-3 py-1 text-sm font-semibold rounded-full text-center ${
+          className={`inline-block px-3 py-1 mt-2 text-sm font-semibold rounded-full text-center ${
             vehicles.availability === "Available"
               ? theme === "light"
                 ? "bg-green-100 text-green-700"

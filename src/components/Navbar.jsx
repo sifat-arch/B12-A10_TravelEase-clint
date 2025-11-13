@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { FaUserTie } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { logOutUser, user, theme, setTheme } = useAuth();
@@ -9,9 +10,22 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOutUser()
-      .then(() => alert("logout successfully"))
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Logged out successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Logout Failed!",
+          text: err.message || "Something went wrong during logout.",
+        });
       });
   };
 
