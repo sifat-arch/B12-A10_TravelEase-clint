@@ -1,13 +1,21 @@
 import React from "react";
 import useAuth from "../hooks/useAuth";
 import { motion } from "framer-motion";
+import {
+  FaCar,
+  FaChevronCircleLeft,
+  FaLocationArrow,
+  FaUser,
+} from "react-icons/fa";
+import { IoTimeOutline } from "react-icons/io5";
+import { TbScubaDivingTankFilled } from "react-icons/tb";
 
 const BookingsCard = ({ booking }) => {
   const { theme } = useAuth();
 
   return (
     <div
-      className={`flex flex-col md:flex-row gap-6 md:gap-10 shadow-md rounded-xl max-w-[1280px] mx-auto mt-10 border transition-colors duration-300
+      className={`flex flex-col md:flex-row gap-6 md:gap-10 shadow-md rounded-xl max-w-[1280px] mx-auto  border transition-colors duration-300
       ${
         theme === "light"
           ? "bg-white border-gray-200 text-gray-900"
@@ -61,47 +69,52 @@ const BookingsCard = ({ booking }) => {
         >
           <div className="w-full sm:w-1/2 space-y-1 text-sm sm:text-base">
             <p
-              className={`${
+              className={`flex items-center gap-1 ${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
               }`}
             >
+              <FaCar />
               Automatic
             </p>
             <p
-              className={`${
+              className={`flex items-center gap-1 ${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
               }`}
             >
+              <IoTimeOutline size={18} />
               2025
             </p>
             <p
-              className={`${
+              className={`flex items-center gap-1 ${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
               }`}
             >
+              <FaLocationArrow />
               18km
             </p>
           </div>
           <div className="w-full sm:w-1/2 space-y-1 text-sm sm:text-base mt-2 sm:mt-0">
             <p
-              className={`${
+              className={`flex items-center gap-1 ${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
               }`}
             >
+              <FaChevronCircleLeft />
               Left
             </p>
             <p
-              className={`${
+              className={`flex items-center gap-1 ${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
               }`}
             >
-              4 Persons
+              <FaUser />4 Persons
             </p>
             <p
-              className={`${
+              className={`flex items-center gap-1 ${
                 theme === "light" ? "text-gray-600" : "text-gray-300"
               }`}
             >
+              <TbScubaDivingTankFilled />
               {booking.category}
             </p>
           </div>

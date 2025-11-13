@@ -9,7 +9,6 @@ const MyBooking = () => {
   const secureAxiosInstance = useAxiosSecure();
   const [bookings, setBookings] = useState([]);
   const { user } = useAuth();
-  console.log(user);
 
   useEffect(() => {
     secureAxiosInstance
@@ -25,6 +24,9 @@ const MyBooking = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
+      <h1 className="text-center mt-5 text-4xl font-bold ">
+        My <span className="text-yellow-500">Bookings</span>
+      </h1>
       {sortedBookings.map((booking) => (
         <BookingsCard key={booking._id} booking={booking} />
       ))}
