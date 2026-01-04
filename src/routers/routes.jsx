@@ -14,6 +14,8 @@ import ErrorPage from "../pages/ErrorPage";
 import DashbardLayout from "../Layout/DashbardLayout";
 import DashboardHome from "../pages/DashboardHome";
 import Profile from "../pages/Profile";
+import Blog from "../pages/Blog";
+import Contact from "../pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -53,11 +55,23 @@ const router = createBrowserRouter([
         path: "profile",
         Component: Profile,
       },
+      {
+        path: "blog",
+        Component: Blog,
+      },
+      {
+        path: "contact",
+        Component: Contact,
+      },
     ],
   },
   {
     path: "dashboard",
-    element: <DashbardLayout></DashbardLayout>,
+    element: (
+      <PrivetRoute>
+        <DashbardLayout></DashbardLayout>,
+      </PrivetRoute>
+    ),
     children: [
       {
         index: true,

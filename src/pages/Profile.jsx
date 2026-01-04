@@ -16,7 +16,7 @@ const Profile = () => {
   });
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 mt-19">
       {/* 1. Header & Cover Section */}
       <div className="relative bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="h-32 bg-gradient-to-r from-yellow-400 to-yellow-600"></div>

@@ -200,6 +200,30 @@ const Navbar = () => {
               All Vehicles
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/blog"
+              className={({ isActive }) =>
+                `px-4 py-2 font-semibold transition-all duration-300 ${
+                  isActive && "text-yellow-500"
+                }`
+              }
+            >
+              Blog
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                `px-4 py-2 font-semibold transition-all duration-300 ${
+                  isActive && "text-yellow-500"
+                }`
+              }
+            >
+              Contact
+            </NavLink>
+          </li>
 
           <li>
             <NavLink
