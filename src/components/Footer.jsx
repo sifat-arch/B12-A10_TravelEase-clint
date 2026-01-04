@@ -1,59 +1,132 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { FaTwitter, FaYoutube, FaFacebook, FaArrowUp } from "react-icons/fa";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  // Animation Variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 },
+  };
+
   return (
-    <footer className="footer footer-horizontal footer-center bg-black  text-white rounded p-10">
-      <nav className="grid grid-flow-col gap-4">
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">All Vehicles</a>
-        <a className="link link-hover">Bookings</a>
-        <a className="link link-hover">My Vehicles</a>
-      </nav>
-      <nav>
-        <div className="grid grid-flow-col gap-4">
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
-              aria-hidden="true"
+    <footer className="relative bg-neutral-900 text-gray-300 pt-16 pb-8 overflow-hidden">
+      {/* Background Decoration Line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Brand Section */}
+          <motion.div {...fadeInUp} className="col-span-1 md:col-span-1">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Tracel<span className="text-yellow-400">Ease</span>
+            </h2>
+            <p className="text-sm leading-relaxed">
+              Elevating your travel experience with comfort and luxury. Get the
+              best quality vehicles at the most affordable prices.
+            </p>
+          </motion.div>
+
+          {/* Quick Links */}
+          <motion.div
+            {...fadeInUp}
+            transition={{ delay: 0.2 }}
+            className="flex flex-col space-y-4"
+          >
+            <h3 className="text-lg font-semibold text-white">Company</h3>
+            <a
+              href="#"
+              className="hover:text-primary transition-colors duration-300"
             >
-              <title>X logo</title>
-              <path d="M4.1 3.6c0.3-0.9 1.2-1.5 2.1-1.3 0.6 0.2 1.1 0.6 1.6 1.1L12 7.9l4.2-4.5c0.5-0.5 1.1-0.9 1.8-1.1 0.9-0.2 1.8 0.4 2.1 1.3 0.3 0.9-0.0 1.9-0.8 2.5L15.7 12l4.6 4.2c0.8 0.6 1.1 1.6 0.8 2.5-0.3 0.9-1.2 1.5-2.1 1.3-0.7-0.2-1.3-0.6-1.8-1.1L12 16.1l-4.2 4.5c-0.5 0.5-1.1 0.9-1.8 1.1-0.9 0.2-1.8-0.4-2.1-1.3-0.3-0.9 0.0-1.9 0.8-2.5L8.3 12 3.7 7.8C2.9 7.2 2.6 6.2 2.9 5.3z" />
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
+              About Us
+            </a>
+            <a
+              href="#"
+              className="hover:text-primary transition-colors duration-300"
             >
-              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
+              All Vehicles
+            </a>
+            <a
+              href="#"
+              className="hover:text-primary transition-colors duration-300"
             >
-              <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-            </svg>
-          </a>
+              Bookings
+            </a>
+          </motion.div>
+
+          {/* Support Section */}
+          <motion.div
+            {...fadeInUp}
+            transition={{ delay: 0.3 }}
+            className="flex flex-col space-y-4"
+          >
+            <h3 className="text-lg font-semibold text-white">Support</h3>
+            <a
+              href="#"
+              className="hover:text-primary transition-colors duration-300"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#"
+              className="hover:text-primary transition-colors duration-300"
+            >
+              Terms & Conditions
+            </a>
+            <a
+              href="#"
+              className="hover:text-primary transition-colors duration-300"
+            >
+              Contact Us
+            </a>
+          </motion.div>
+
+          {/* Newsletter / Social */}
+          <motion.div {...fadeInUp} transition={{ delay: 0.4 }}>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Stay Connected
+            </h3>
+            <div className="flex space-x-4">
+              {[
+                { icon: <FaTwitter />, link: "#" },
+                { icon: <FaYoutube />, link: "#" },
+                { icon: <FaFacebook />, link: "#" },
+              ].map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.link}
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary hover:text-white transition-all shadow-lg text-lg"
+                >
+                  {social.icon}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
         </div>
-      </nav>
-      <aside>
-        <p>
-          Copyright © {new Date().getFullYear()} - All right reserved by Premium
-          Rental Car Ltd
-        </p>
-      </aside>
+
+        <hr className="border-gray-800 mb-8" />
+
+        {/* Bottom Section - Copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+            © {currentYear} Premium Rental Car Ltd. All rights reserved.
+          </motion.p>
+
+          {/* Scroll to top button */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="mt-4 md:mt-0 p-3 bg-gray-800 rounded-full hover:bg-primary transition-all group"
+            aria-label="Scroll to top"
+          >
+            <FaArrowUp className="group-hover:-translate-y-1 transition-transform text-white" />
+          </button>
+        </div>
+      </div>
     </footer>
   );
 };

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 const axiosInstance = axios.create({
-  baseURL: "https://b-12-a10-travelease-server.vercel.app",
+  baseURL: "http://localhost:3000",
 });
 
 const useAxiosSecure = () => {

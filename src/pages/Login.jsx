@@ -1,26 +1,26 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router"; 
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import cover from "../assets/cover.jpg";
 
 const Login = () => {
   const { logInUser, signInUserWithGoogle, theme } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
-    // login user
+
     logInUser(email, password)
       .then((res) => {
-        console.log("logged user", res.user);
         if (res.user) {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Logged in",
+            title: "Logged in Successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -40,16 +40,14 @@ const Login = () => {
   const handleGoogleLogin = () => {
     signInUserWithGoogle()
       .then((res) => {
-        console.log("logged user", res.user);
         if (res.user) {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Login with google done",
+            title: "Login with Google done",
             showConfirmButton: false,
             timer: 1500,
           });
-
           navigate(location.state || "/");
         }
       })
@@ -62,112 +60,95 @@ const Login = () => {
       });
   };
 
+  const isDark = theme === "dark";
+
   return (
     <div
-      className={`min-h-screen flex items-center justify-center ${
-        theme === "light" ? " bg-gray-50" : " bg-gray-800"
-      }`}
+      className="min-h-screen flex items-center justify-center bg-cover bg-center relative px-4"
+      style={{ backgroundImage: `url(${cover})` }}
     >
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-black/50"></div>
+
+      {/* Login Form Container */}
       <div
-        className={`w-full max-w-lg  shadow-lg rounded-2xl p-8 ${
-          theme === "light" ? "bg-white " : "bg-gray-700"
+        className={`relative z-10 w-full max-w-lg shadow-2xl rounded-3xl p-8 backdrop-blur-md ${
+          isDark ? "bg-gray-900/80 text-white" : "bg-white/90 text-black"
         }`}
       >
-        <h2
-          className={`text-3xl font-bold text-center text-black mb-6 ${
-            theme === "dark" && "text-white"
-          }`}
-        >
+        <h2 className="text-3xl font-bold text-center mb-8">
           Login to Your <span className="text-yellow-500"> Account</span>
         </h2>
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          {/* Email */}
+        <form onSubmit={handleLogin} className="space-y-6">
+          {/* Email Field */}
           <div>
-            <label
-              className={`block text-sm font-medium  mb-1 ${
-                theme === "light" ? "text-gray-600" : "text-white"
-              }`}
-            >
-              Email
-            </label>
+            <label className="block text-sm font-medium mb-1">Email</label>
             <input
               type="email"
               name="email"
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-transparent"
               placeholder="Enter your email"
             />
           </div>
 
-          {/* Password */}
+          {/* Password Field */}
           <div>
-            <label
-              className={`block text-sm font-medium mb-1 ${
-                theme === "light" ? "text-gray-600" : "text-white"
-              }`}
-            >
-              Password
-            </label>
+            <label className="block text-sm font-medium mb-1">Password</label>
             <input
               type="password"
               name="password"
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-transparent"
               placeholder="Enter your password"
             />
 
-            <div className="flex justify-between items-center mt-4">
-              {/* checkbox */}
+            <div className="flex justify-between items-center mt-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  id="terms"
-                  required
-                  className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"
+                  id="remember"
+                  className="w-4 h-4 text-yellow-500 border-gray-300 rounded focus:ring-yellow-500"
                 />
-                <label
-                  htmlFor="terms"
-                  className={`text-sm ${
-                    theme === "light" ? "text-gray-600" : "text-white"
-                  }`}
-                >
-                  Remember{" "}
-                  <a href="/terms" className="text-yellow-600 hover:underline">
-                    me
-                  </a>
+                <label htmlFor="remember" className="text-sm cursor-pointer">
+                  Remember me
                 </label>
               </div>
-
-              <div>
-                <Link
-                  to="/forget-password"
-                  className="text-sm font-semibold text-yellow-600 hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+              <Link
+                to="/forget-password"
+                className="text-sm font-semibold text-yellow-500 hover:underline"
+              >
+                Forgot password?
+              </Link>
             </div>
           </div>
 
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-yellow-500 py-3 text-white rounded-md hover:bg-yellow-600 transition"
+            className="w-full py-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-xl transition duration-300 shadow-lg"
           >
             Login
           </button>
 
-          {/* google button */}
+          {/* Divider */}
+          <div className="flex items-center my-6 text-gray-400">
+            <div className="flex-grow border-t border-gray-400"></div>
+            <span className="px-3 text-sm uppercase">OR</span>
+            <div className="flex-grow border-t border-gray-400"></div>
+          </div>
+
+          {/* Google Login Button */}
           <button
-            className="btn w-full py-5.5 bg-white text-black border-[#e5e5e5]"
-            onClick={handleGoogleLogin}
             type="button"
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-3 py-3 bg-white text-black border border-gray-300 rounded-xl hover:bg-gray-100 transition duration-300 shadow-md"
           >
             <svg
               aria-label="Google logo"
-              width="16"
-              height="16"
+              width="20"
+              height="20"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >
@@ -196,14 +177,13 @@ const Login = () => {
         </form>
 
         {/* Register Redirect */}
-        <p
-          className={`text-center text-sm mt-5 ${
-            theme === "light" ? "text-gray-600" : "text-white"
-          }`}
-        >
+        <p className="text-center text-sm mt-8">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-yellow-600 hover:underline ">
-            Register
+          <Link
+            to="/register"
+            className="text-yellow-500 font-bold hover:underline"
+          >
+            Register Now
           </Link>
         </p>
       </div>

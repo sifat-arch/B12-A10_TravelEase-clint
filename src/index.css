@@ -1,37 +1,23 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* --- Custom Text Classes --- */
-.text-primary {
-  @apply text-purple-700;
+@theme {
+  /* আপনার কালারগুলো এখানে সেট করুন */
+  --color-primary: #4f46e5;
+  --color-secondary: #64748b;
+  --color-accent: #10b981;
 }
 
-.text-secondary {
-  @apply text-white;
-}
+/* যদি ফাইল থাকে, নাহলে প্রয়োজন নেই */
 
-.text-muted {
-  @apply text-gray-500 text-sm;
-}
+:root {
+  --p: 243 75% 59%; /* Indigo (#4F46E5) - HSL format */
+  --s: 215 16% 47%; /* Slate (#64748B) */
+  --a: 161 84% 39%; /* Emerald (#10B981) */
 
-/* --- Custom Buttons --- */
-@layer components {
-  .btn-primary {
-    @apply btn text-white font-semibold rounded-lg px-5 py-2 shadow-md transition duration-300
-   from-yellow-500 
-      hover:from-yellow-600 border-none;
-  }
-
-  .btn-secondary {
-    @apply btn border border-yellow-500 text-yellow-600 font-medium rounded-lg px-5 py-2 transition duration-300
-      hover:bg-yellow-50 hover:text-yellow-700;
-  }
-
-  .btn-outline {
-    @apply btn border bg-purple-100 border-purple-400 text-gray-700 hover:bg-gray-100 font-semibold rounded-lg px-5 py-2 transition duration-200;
-  }
+  /* ব্যাকগ্রাউন্ড এবং টেক্সট কালার */
+  --b1: 0 0% 100%; /* সাদা ব্যাকগ্রাউন্ড */
+  --bc: 215 28% 17%; /* টেক্সট কালার */
 }

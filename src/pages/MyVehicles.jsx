@@ -19,6 +19,8 @@ const MyVehicles = () => {
     }
   }, [secureAxiosInstance, user]);
 
+  console.log("vehicles is ", vehicles, user);
+
   // Delete function
   const handleDelete = (id) => {
     Swal.fire({

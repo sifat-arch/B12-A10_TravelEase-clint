@@ -11,6 +11,9 @@ import PrivetRoute from "../privetRoute/PrivetRoute";
 import MyVehicles from "../pages/MyVehicles";
 import UpdateVehicles from "../pages/UpdateVehicles";
 import ErrorPage from "../pages/ErrorPage";
+import DashbardLayout from "../Layout/DashbardLayout";
+import DashboardHome from "../pages/DashboardHome";
+import Profile from "../pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -27,11 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "view-details/:id",
-        element: (
-          <PrivetRoute>
-            <ViewDetails />,
-          </PrivetRoute>
-        ),
+        element: <ViewDetails />,
       },
       {
         path: "login",
@@ -40,6 +39,29 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+
+      {
+        path: "update-vehicles/:id",
+        element: (
+          <PrivetRoute>
+            <UpdateVehicles />,
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "profile",
+        Component: Profile,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <DashbardLayout></DashbardLayout>,
+    children: [
+      {
+        index: true,
+        element: <DashboardHome></DashboardHome>,
       },
       {
         path: "add-vehicles",
@@ -62,14 +84,6 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <MyVehicles />,
-          </PrivetRoute>
-        ),
-      },
-      {
-        path: "update-vehicles/:id",
-        element: (
-          <PrivetRoute>
-            <UpdateVehicles />,
           </PrivetRoute>
         ),
       },
